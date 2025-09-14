@@ -29,7 +29,21 @@ jobs:
         submodules: recursive
         fetch-depth: 0
 
+    - name: Install Vulkan SDK
+      uses: jakoch/install-vulkan-sdk-action@v1
+      with:
+        vulkan_version: 1.3.275.0
+        optional_components: com.lunarg.vulkan.vma
+        install_runtime: true
+        cache: true
+        stripdown: true
+
+        # You can install a software rasterizer.
+        install_swiftshader: true
+        install_lavapipe: true
+
     - uses: msys2/setup-msys2@v2
+      if: ${{ matrix.sys == 'ucrt64' }}
       with:
         update: true
         msystem: ${{matrix.sys}}
@@ -43,14 +57,31 @@ jobs:
           yaml-cpp:p
           glfw:p
           catch:p
+          ffts:p
+          hidapi:p
+          libpng:p
+
+    - uses: msys2/setup-msys2@v2
+      name: "Download Vulkan packages for MSYS"
+      if: ${{ matrix.sys != 'ucrt64' }}
+      with:
+        update: true
+        msystem: ${{matrix.sys}}
+        pacboy: >-
+          cmake:p
+          toolchain:p
+          libsigc++:p
+          yaml-cpp:p
+          glfw:p
+          catch:p
+          ffts:p
+          hidapi:p
+          libpng:p
           vulkan-headers:p
           vulkan-loader:p
           shaderc:p
           glslang:p
           spirv-tools:p
-          ffts:p
-          hidapi:p
-          libpng:p
 
     - name: Install WiX
       if: ${{ matrix.sys == 'ucrt64' }}
