@@ -1,13 +1,9 @@
-name: Build-Tarballs
+name: Build tarballs
 
 on:
   push:
   pull_request:
   workflow_dispatch:
-
-env:
-  SDK_VERSION_STANDALONE: 1.4.321.1
-  SDK_VERSION_REPO: 1.4.309
 
 jobs:
   Linux:
@@ -32,12 +28,13 @@ jobs:
     steps:
       - name: show env
         run: env
-      - name: Install General Dependencies
+      - name: Install dependencies
         run: |
           apt-get update
           apt-get upgrade -y
           apt-get install -y \
-            git 
+            git \
+            gettext-base 
 
       - name: Check Out Code
         uses: actions/checkout@v4
@@ -48,7 +45,9 @@ jobs:
       - name: Build
         if: ${{ ! matrix.docs }}
         run: |
-          tar --exclude='.[^/]*' -czvf sources.tgz *
+          git config --global --add safe.directory `pwd`
+          ./create-tarball.sh
+          sha256sum tarball.tar.gz > tarball.tar.gz.sha256sum 
 
       - name: Upload Artifacts
         if: ${{ !  matrix.docs }}
@@ -56,4 +55,5 @@ jobs:
         with:
           name: ngscopeclient-source
           path: |
-            sources.tar.gz
+            tarball.tar.gz
+            tarball.tar.gz.sha256sum
