@@ -12,27 +12,15 @@ env:
 jobs:
   Linux:
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os:
-          - name: debian-oldstable
-            version: bookworm
-            container: debian:bookworm
-          - name: debian-stable
-            version: trixie
-            container: debian:trixie
-        sdk_type: [repo, standalone]
-        docs: [true, false]
-        exclude:
-          - sdk_type: standalone
-            docs: true
-          - os:
-              name: debian-stable
-            sdk_type: standalone
+          - name: debian
+            version: base
 
     runs-on: ubuntu-latest
     container:
-      image: ${{ matrix.os.container }}
+      image: debian:trixie
       env:
         SDK_VERSION_STANDALONE: 1.4.325.0
         SDK_VERSION_REPO: 1.4.309
