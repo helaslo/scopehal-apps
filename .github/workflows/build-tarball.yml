@@ -1,0 +1,71 @@
+name: Build-debian
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  SDK_VERSION_STANDALONE: 1.4.321.1
+  SDK_VERSION_REPO: 1.4.309
+
+jobs:
+  Linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: debian-oldstable
+            version: bookworm
+            container: debian:bookworm
+          - name: debian-stable
+            version: trixie
+            container: debian:trixie
+        sdk_type: [repo, standalone]
+        docs: [true, false]
+        exclude:
+          - sdk_type: standalone
+            docs: true
+          - os:
+              name: debian-stable
+            sdk_type: standalone
+
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.os.container }}
+      env:
+        SDK_VERSION_STANDALONE: 1.4.325.0
+        SDK_VERSION_REPO: 1.4.309
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: show env
+        run: env
+      - name: Install General Dependencies
+        run: |
+          apt-get update
+          apt-get upgrade -y
+          apt-get install -y \
+            git 
+
+      - name: Check Out Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Build
+        if: ${{ ! matrix.docs }}
+        run: |
+          tar --exclude='.[^/]*' -czvf sources.tgz ./
+
+      - name: Upload Artifacts
+        if: ${{ !  matrix.docs }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ngscopeclient-source
+          path: |
+            sources.tar.gz
