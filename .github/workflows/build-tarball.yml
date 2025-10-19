@@ -48,7 +48,7 @@ jobs:
       - name: Build
         if: ${{ ! matrix.docs }}
         run: |
-          tar --exclude='.[^/]*' -czvf sources.tgz ./
+          tar --exclude='.[^/]*' -czvf sources.tgz *
 
       - name: Upload Artifacts
         if: ${{ !  matrix.docs }}
