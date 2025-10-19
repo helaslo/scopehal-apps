@@ -1,4 +1,4 @@
-name: Build-debian
+name: Build-Tarballs
 
 on:
   push:
