@@ -47,6 +47,5 @@ for file in *; do
   sha256sum $file >> ../digest.txt
   ls -s $file >> ../digest.txt
   sha256sum $file > $file.sha256sum
-  md5sum $file > $file.md5sum
 done
 mv ../digest.txt "ngscopeclient-$NGSCOPECLIENT_PACKAGE_VERSION-manifest.txt"
