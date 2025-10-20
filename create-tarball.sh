@@ -13,6 +13,7 @@ function fix_commit_time() {
     --format=tformat:%cd \
     --date=format:%Y-%m-%dT%H:%M:%SZ \
     "$@")
+    dos2unix "$file" 2> /dev/null
     touch -md "$date" "$file"
 }
 
