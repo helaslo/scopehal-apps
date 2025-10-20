@@ -6,3 +6,5 @@ asan-build
 release-nodebug-build
 debug-noopt-build
 release-asan-build
+tarballs
+release-info.cmake
