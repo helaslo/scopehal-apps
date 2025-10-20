@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#Based on https://www.gnu.org/software/tar/manual/html_section/Reproducibility.html
+#Loosely based on https://www.gnu.org/software/tar/manual/html_section/Reproducibility.html
 #Drop the mtime attribute from the files since I was unable to reliably make that reproducible
 
 set -e
