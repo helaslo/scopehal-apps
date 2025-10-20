@@ -39,9 +39,7 @@ rm -Rf tarballs
 mkdir "tarballs"
 
 LC_ALL=C tar $TARFLAGS -cf - $git_file_list |
-  gzip $GZIPFLAGS > "tarballs/tarball.tar.gz"
-
-tar $TARFLAGS -cf - $git_file_list > "tarballs/tarball.tar"
+  gzip $GZIPFLAGS > "tarballs/ngscopeclient-$NGSCOPECLIENT_PACKAGE_VERSION.tar.gz"
 
 cd tarballs
 echo "" > ../digest.txt
@@ -51,4 +49,4 @@ for file in *; do
   sha256sum $file > $file.sha256sum
   md5sum $file > $file.md5sum
 done
-mv ../digest.txt .
+mv ../digest.txt "ngscopeclient-$NGSCOPECLIENT_PACKAGE_VERSION-manifest.txt"

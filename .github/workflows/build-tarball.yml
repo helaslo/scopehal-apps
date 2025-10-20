@@ -46,7 +46,7 @@ jobs:
         if: ${{ ! matrix.docs }}
         run: |
           git config --global --add safe.directory `pwd`
-          ./create-tarball.sh
+          ./create-tarballs.sh
 
       - name: Upload Artifacts
         if: ${{ !  matrix.docs }}
