@@ -64,7 +64,7 @@ TARFLAGS="
   --sort=name --format=posix
   --pax-option=exthdr.name=%d/PaxHeaders/%f
   --pax-option=delete=atime,delete=ctime
-  --clamp-mtime --mtime=$SOURCE_EPOCH
+  --mtime=$SOURCE_EPOCH
   --numeric-owner --owner=0 --group=0
   --mode=go+u,go-w
 "
