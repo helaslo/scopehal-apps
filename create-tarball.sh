@@ -11,13 +11,6 @@ export TZ=UTC0
 location="$(dirname -- "$( readlink -f -- "$0"; )";)"
 cd "$location"
 
-# Set timestamp of each directory under $FILES
-# to the latest timestamp of any descendant.
-echo "Fixing directory timestamps"
-find $git_file_list -depth -type d -exec sh -c \
-  'touch -r "$0/$(ls -At "$0" | head -n 1)" "$0"' \
-  {} ';'
-
 export NGSCOPECLIENT_PACKAGE_VERSION="$(git describe --always --tags)"
 export NGSCOPECLIENT_PACKAGE_VERSION_LONG="$(git describe --always --tags --long)"
 export SCOPEHAL_PACKAGE_VERSION="cd lib;$(git describe --always --tags --long)"
@@ -47,3 +40,5 @@ LC_ALL=C tar $TARFLAGS -cf - $git_file_list |
   gzip $GZIPFLAGS > "tarball.tar.gz"
 
 tar $TARFLAGS -cf - $git_file_list > tarball.tar
+sha256sum tarball.tar > tarball.hashes.txt
+sha256sum tarball.tar.gz >> tarball.hashes.txt
