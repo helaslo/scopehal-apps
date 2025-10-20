@@ -33,12 +33,22 @@ TARFLAGS="
 
 git_file_list="$git_file_list release-info.cmake"
 
-echo "Creating tarball"
 GZIPFLAGS="--no-name --best"
 
-LC_ALL=C tar $TARFLAGS -cf - $git_file_list |
-  gzip $GZIPFLAGS > "tarball.tar.gz"
+rm -Rf tarballs
+mkdir "tarballs"
 
-tar $TARFLAGS -cf - $git_file_list > tarball.tar
-sha256sum tarball.tar > tarball.hashes.txt
-sha256sum tarball.tar.gz >> tarball.hashes.txt
+LC_ALL=C tar $TARFLAGS -cf - $git_file_list |
+  gzip $GZIPFLAGS > "tarballs/tarball.tar.gz"
+
+tar $TARFLAGS -cf - $git_file_list > "tarballs/tarball.tar"
+
+cd tarballs
+echo "" > ../digest.txt
+for file in *; do
+  sha256sum $file >> ../digest.txt
+  ls -s $file >> ../digest.txt
+  sha256sum $file > $file.sha256sum
+  md5sum $file > $file.md5sum
+done
+mv ../digest.txt .

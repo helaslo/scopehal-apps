@@ -47,8 +47,6 @@ jobs:
         run: |
           git config --global --add safe.directory `pwd`
           ./create-tarball.sh
-          sha256sum tarball.tar.gz > tarball.tar.gz.sha256sum.txt
-          sha256sum tarball.tar >> tarball.tar.gz.sha256sum.txt
 
       - name: Upload Artifacts
         if: ${{ !  matrix.docs }}
@@ -56,7 +54,4 @@ jobs:
         with:
           name: ngscopeclient-source
           path: |
-            tarball.tar.gz
-            tarball.tar
-            tarball.tar.gz.sha256sum.txt
-            tarball.hashes.txt
+            tarballs/*
