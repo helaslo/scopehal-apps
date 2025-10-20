@@ -56,4 +56,4 @@ jobs:
           name: ngscopeclient-source
           path: |
             tarball.tar.gz
-            tarball.tar.gz.sha256sum.txr
+            tarball.tar.gz.sha256sum.txt
