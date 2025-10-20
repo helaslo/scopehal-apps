@@ -68,9 +68,9 @@ TARFLAGS="
   --mode=go+u,go-w
 "
 
-touch -md "$SOURCE_EPOCH" release-info.cmake
-
-git_file_list="$git_file_list release-info.cmake"
+#touch -md "$SOURCE_EPOCH" release-info.cmake
+#
+#git_file_list="$git_file_list release-info.cmake"
 
 echo "Creating tarball"
 GZIPFLAGS="--no-name --best"
