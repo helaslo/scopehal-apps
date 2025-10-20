@@ -76,3 +76,4 @@ echo "Creating tarball"
 GZIPFLAGS="--no-name --best"
 LC_ALL=C tar $TARFLAGS -cf - $git_file_list |
   gzip $GZIPFLAGS > "tarball.tar.gz"
+tar $TARFLAGS -cf - $git_file_list > tarball.tar
