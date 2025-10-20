@@ -16,7 +16,7 @@ export NGSCOPECLIENT_PACKAGE_VERSION_LONG="$(git describe --always --tags --long
 export SCOPEHAL_PACKAGE_VERSION="cd lib;$(git describe --always --tags --long)"
 cat release-info.cmake.in | envsubst > release-info.cmake
 
-
+git_file_list=$(git ls-files --recurse-submodules )
 
 SOURCE_EPOCH=$(git log -1 \
                    --format=tformat:%cd \
