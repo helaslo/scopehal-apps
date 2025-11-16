@@ -74,9 +74,6 @@ jobs:
           key: ${{ github.job }}-${{ matrix.os.container }}-${{ matrix.sdk_type}}
           max-size: "1500M"
 
-      - name: Pull sub-repos
-        run: git submodule update --init --recursive --depth=1
-
       - name: Install distro specific vulkan dependencies
         run: scripts/distro-tools.sh install-vulkan-deps
 
