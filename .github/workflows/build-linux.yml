@@ -28,11 +28,6 @@ jobs:
 
   deploy:
     needs: CreateTarball
-    steps:
-      - name: list all files
-        run: file *
-      - name: Extract source zip
-        run: unzip ngscopeclient-source.zip
 
     strategy:
       fail-fast: true
