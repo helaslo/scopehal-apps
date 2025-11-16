@@ -18,9 +18,7 @@ install_build_deps(){
 
 install_extra_ci_convenience_deps(){
   $COMMAND_EXECUTOR zypper install -y \
-                                           ccache \
-                                           git
-
+                                           ccache
 }
 
 install_vulkan_deps(){
