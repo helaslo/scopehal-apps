@@ -61,6 +61,9 @@ jobs:
       - name: Unpack source tarball
         run: tar -xf *.tar.gz
 
+      - name: Install basic dependencies
+        run: scripts/distro-tools.sh install-basic-deps
+
       - name: Use CCache
         if: ${{ !env.ACT }}
         uses: hendrikmuhs/ccache-action@v1.2
