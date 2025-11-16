@@ -62,7 +62,7 @@ jobs:
         run: tar -xf *.tar.gz
 
       - name: Install basic dependencies
-        run: scripts/distro-tools.sh install-basic-deps
+        run: scripts/distro-tools.sh install-build-deps
 
       - name: Install dependencies releated to CI
         run: scripts/distro-tools.sh install-ci-deps
