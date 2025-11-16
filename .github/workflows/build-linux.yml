@@ -64,6 +64,9 @@ jobs:
       - name: Install basic dependencies
         run: scripts/distro-tools.sh install-basic-deps
 
+      - name: Install dependencies releated to CI
+        run: scripts/distro-tools.sh install-ci-deps
+
       - name: Use CCache
         if: ${{ !env.ACT }}
         uses: hendrikmuhs/ccache-action@v1.2
