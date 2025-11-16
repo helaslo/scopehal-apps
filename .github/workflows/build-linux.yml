@@ -37,6 +37,9 @@ jobs:
             version: tumbleweed
             container: opensuse/tumbleweed
             lsb-name: openSUSE
+          - name: leap
+            version: 16
+            container: opensuse/leap:16.0
 
         sdk_type: [ repo ]
         docs: [ false ]
