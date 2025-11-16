@@ -28,7 +28,7 @@ jobs:
 
       - name: Published JS File Name
         id: publish
-        run: find tarball/*.tar.gz -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+        run: find tarballs/*.tar.gz -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
 
   deploy:
     needs: CreateTarball
@@ -40,7 +40,7 @@ jobs:
           name: ${{ needs.build.outputs.script-file }}
           path: .
       - name: Output Files
-        run: ls
+        run: ls -la
 
 #  Build:
 #    strategy:
