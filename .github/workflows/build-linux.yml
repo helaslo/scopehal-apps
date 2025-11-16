@@ -28,7 +28,7 @@ jobs:
 
       - name: Published JS File Name
         id: publish
-        run: ls tarball/*.tar.gz -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+        run: find tarball/*.tar.gz -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
 
   deploy:
     needs: CreateTarball
