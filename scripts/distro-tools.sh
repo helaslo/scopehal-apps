@@ -65,6 +65,10 @@ case "$1" in
     install_build_deps
     ;;
 
+  "install-vulkan-deps")
+    install_vulkan_deps
+    ;;
+
   "install-test-dependencies")
     install_test_dependencies
     ;;

@@ -1,8 +1,6 @@
 install_build_deps(){
   $COMMAND_EXECUTOR zypper install -y \
                                            rpm-build \
-                                           ccache \
-                                           git \
                                            ninja \
                                            cmake \
                                            gcc-c++ \
@@ -16,6 +14,22 @@ install_build_deps(){
                                            libglfw-devel \
                                            lsb-release \
                                            wayland-devel
+}
+
+install_extra_ci_convenience_deps(){
+  $COMMAND_EXECUTOR zypper install -y \
+                                           ccache \
+                                           git
+
+}
+
+install_vulkan_deps(){
+  $COMMAND_EXECUTOR zypper install -y \
+                              vulkan-devel \
+                              shaderc \
+                              shaderc-devel \
+                              glslang-devel \
+                              spirv-tools-devel
 }
 
 install_test_dependencies(){
