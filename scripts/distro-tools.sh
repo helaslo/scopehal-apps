@@ -80,6 +80,7 @@ case "$1" in
   *)
     echo "Unknown command"
     usage
+    exit 1
     ;;
 esac
 
