@@ -51,7 +51,7 @@ jobs:
             libglfw-devel \
             fftw3-devel \
             lsb-release \
-            wayland-devel \
+            wayland-devel
 
       - name: Install Docs Dependencies
         if: ${{ matrix.docs }}

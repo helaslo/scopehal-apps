@@ -1,0 +1,86 @@
+name: Build-openSUSE
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  Checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check Out Code
+        uses: actions/checkout@v4
+
+      - name: Pull subrepos
+        run: git submodule update --init --recursive --depth=1 --fetch-tags
+
+
+  Build:
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - name: tumbleweed
+            version: tumbleweed
+            container: opensuse/tumbleweed
+            lsb-name: openSUSE
+
+        sdk_type: [ repo ]
+        docs: [ false ]
+        exclude:
+          - sdk_type: standalone
+            docs: true
+
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.os.container }}
+      env:
+        DISTRO_LSB_ID: ${{ matrix.os.lsb-name }}
+
+    steps:
+
+      - name: Checkout bootstrap code
+        uses: actions/checkout@v4
+
+      - name: Install General Dependencies
+        run: scripts/distro-tools.sh install-build-deps
+
+      - name: Clean everything
+        run: scripts/distro-tools.sh install-build-deps
+
+      - name: Checkout full code
+        uses: actions/checkout@v4
+
+      - name: Use CCache
+        if: ${{ !env.ACT }}
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ github.job }}-${{ matrix.os.container }}-${{ matrix.sdk_type}}
+          max-size: "1500M"
+
+      - name: Pull subrepos
+        run: git submodule update --init --recursive --depth=1
+
+      - name: Configure
+        run: |
+          git config --global --add safe.directory `pwd`
+          mkdir build
+          cd build
+          cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DDISABLE_PCH=ON \
+            -GNinja \
+            -DCPACK_GENERATOR=DEB \
+            -DBUILD_TESTING=ON \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            ..
+
+      - name: Build
+        if: ${{ ! matrix.docs }}
+        run: |
+          cd build
+          ninja
+
